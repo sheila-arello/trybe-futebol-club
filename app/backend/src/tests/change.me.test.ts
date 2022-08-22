@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
+import User from '../database/models/user'; 
 
 import { Response } from 'superagent';
 
@@ -12,20 +12,42 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+describe('Create', () => { 
+  beforeEach(() => {
+    sinon.stub(JwtService, "sign").returns(createUserResponseMock.token)
+    // Caso o metodo sign não fosse estático
+    // Sinon.stub(JwtService.prototype, "sign").returns(createUserResponseMock.token)
+    sinon.stub(User, "create").resolves(userMock as User)
+    sinon.stub(passwordService, "encryptPassword").returns("any-hash");
+  })
 
-  // let chaiHttpResponse: Response;
+  afterEach(() => {
+    sinon.restore();
+  })
 
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
+  it('should return status 201', async  () => {
+    const response = await chai.request(app)
+      .post('/users')
+      .send(createUserBodyMock)
+    
+    expect(response.status).to.equal(201);
+  })
+
+
+// describe('Testa rota de login', () => {
+//   /**
+//    * Exemplo do uso de stubs com tipos
+//    */
+
+//   let chaiHttpResponse: Response;
+
+//   before(async () => {
+//     sinon
+//       .stub(User, 'findAll')
+//       .resolves({
+//         ...<Seu mock>
+//       } as IUser);
+//   });
 
   // after(()=>{
   //   (Example.findOne as sinon.SinonStub).restore();
@@ -38,8 +60,4 @@ describe('Seu teste', () => {
 
   //   expect(...)
   // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
-  });
 });
