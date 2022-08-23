@@ -1,8 +1,8 @@
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 const encryptedPassword = {
   encryptPassword: (password: string) => {
-    const salt = bcrypt.genSaltSync(5);
+    const salt = bcrypt.genSaltSync(1);
     const encrypted = bcrypt.hashSync(password, salt);
     return encrypted;
   },

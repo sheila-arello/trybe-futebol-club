@@ -5,7 +5,7 @@ export default class Jwt {
   private static secret: string;
 
   constructor() {
-    Jwt.secret = process.env.SECRET || 'MySecretWord';
+    Jwt.secret = process.env.JWT_SECRET || 'MySecretWord';
   }
 
   static generateToken(payload: { id:number, email: string }): string {
@@ -14,7 +14,7 @@ export default class Jwt {
   }
 
   static verifyToken(token: string): string {
-    // return verify(token, Jwt.secret) as string;
-    return verify(token, 'MySecretWord') as string;
+    return verify(token, Jwt.secret) as string;
+    // return verify(token, 'MySecretWord') as string;
   }
 }
