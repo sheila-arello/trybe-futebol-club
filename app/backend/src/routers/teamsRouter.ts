@@ -8,6 +8,7 @@ const teamsController = new TeamsController(teamsService);
 
 const teamsRoutes = Router();
 // teamsRoutes.get('/', verifyToken, (req, res) => teamsController.list(req, res));
-teamsRoutes.get('/', (req, res) => teamsController.list(req, res));
 teamsRoutes.get('/:id', (req, res) => teamsController.getById(req, res));
+teamsRoutes.get('/', (req, res) => teamsController.list(req, res));
+
 export default teamsRoutes;
