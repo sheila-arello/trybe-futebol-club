@@ -21,14 +21,6 @@ export default class UserService implements IUserService {
   // eslint-disable-next-line class-methods-use-this
   public async login(userCredentials: UserCredentials): Promise<string | null> {
     const user: User | null = await User.findOne({ where: { email: userCredentials.email } });
-
-    // Gerar o token
-    // if (!user) {
-    //   const e = new Error();
-    //   e.name = 'NotFoundError';
-    //   e.message = 'Incorrect email or password';
-    //   throw e;
-    // }
     if (!user) throw new NotFoundError('Incorrect email or password');
     // verificar a senha tambem
     const isPasswordValid = encryptedPassword.compare(userCredentials.password, user?.password);
@@ -36,6 +28,7 @@ export default class UserService implements IUserService {
     const token = Jwt.generateToken({
       email: user.email,
       id: user.id,
+      role: user.role,
     });
 
     return token;

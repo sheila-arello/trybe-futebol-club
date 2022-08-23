@@ -1,20 +1,15 @@
 import { sign, verify } from 'jsonwebtoken';
 import 'dotenv/config';
 
+const secret = process.env.JWT_SECRET || 'MySecretWord';
+
 export default class Jwt {
-  private static secret: string;
-
-  constructor() {
-    Jwt.secret = process.env.JWT_SECRET || 'MySecretWord';
+  static generateToken(payload: { id: number, email: string, role:string }): string {
+    return sign(payload, secret);
   }
 
-  static generateToken(payload: { id:number, email: string }): string {
-    // return sign(payload, Jwt.secret);
-    return sign(payload, 'MySecretWord');
-  }
-
-  static verifyToken(token: string): string {
-    return verify(token, Jwt.secret) as string;
-    // return verify(token, 'MySecretWord') as string;
+  static verifyToken(token: string) {
+    const data = verify(token, secret);
+    return data;
   }
 }
