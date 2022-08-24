@@ -1,15 +1,22 @@
 import { NextFunction, Request, Response } from 'express';
 import Jwt from '../utils/Jwt';
+import NotFoundError from './NotFoundError';
+
+export interface IRole extends Response {
+  role: string
+}
 
 export default function verifyToken(
   req: Request,
   res: Response,
-  _next: NextFunction,
+  next: NextFunction,
 ) {
   const token = req.headers.authorization;
-  if (!token) return null;
-  const data = Jwt.verifyToken(token);
-  if (typeof data === 'string') return null;
+  if (!token) throw new NotFoundError('Token must be a valid token');
+  // type teste = { role: string };
+  const data = Jwt.verifyToken(token) as { role: string };
   const { role } = data;
-  res.status(200).json({ role });
+  const dataRole: IRole = res as IRole;
+  dataRole.role = role;
+  next();
 }
