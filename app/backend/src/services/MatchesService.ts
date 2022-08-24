@@ -6,9 +6,10 @@ export interface IMatchesService {
   list(inProgress?: boolean): Promise<Matches[]>
   getById(id: number): Promise<Matches | null>
   create(data: IMatches): Promise<Matches | null>
+  edit(id: number): Promise<[number, Matches[]] | null>
 }
 
-export default class UserService implements IMatchesService {
+export default class MatchesService implements IMatchesService {
   // eslint-disable-next-line class-methods-use-this
 
   private include = [
@@ -51,6 +52,12 @@ export default class UserService implements IMatchesService {
     const newData: ICreateMatch = data as ICreateMatch;
     newData.inProgress = true;
     const match = await Matches.create(newData);
+    return match;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public async edit(id: number): Promise<[number, Matches[]] | null> {
+    const match = await Matches.update({ inProgress: false }, { where: { id } });
     return match;
   }
 }

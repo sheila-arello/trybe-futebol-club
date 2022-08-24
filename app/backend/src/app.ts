@@ -27,9 +27,9 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
-    this.app.use('/login', loginRoutes);
-    this.app.use('/matches', matchesRoutes);
     this.app.use('/teams', teamsRoutes);
+    this.app.use('/matches', matchesRoutes);
+    this.app.use('/login', loginRoutes);
 
     this.app.use(errorMiddleware);
   }

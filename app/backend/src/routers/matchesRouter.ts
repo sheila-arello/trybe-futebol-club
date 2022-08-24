@@ -11,6 +11,11 @@ const matchesController = new MatchesController(matchesService, teamsService);
 
 const matchesRoutes = Router();
 // matchesRoutes.get('/:id', (req, res) => matchesController.getById(req, res));
+matchesRoutes.put(
+  '/:id/finish',
+  verifyToken,
+  (req, res) => matchesController.edit(req, res),
+);
 matchesRoutes.get('/', (req, res) => matchesController.list(req, res));
 matchesRoutes.post('/', verifyToken, (req, res) => matchesController.create(req, res));
 
