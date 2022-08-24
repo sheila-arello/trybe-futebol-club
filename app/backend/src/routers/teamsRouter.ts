@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import TeamsController from '../controllers/TeamsController';
-// import verifyToken from '../middlewares/verifyToken';
 import TeamsService from '../services/TeamsService';
 
 const teamsService = new TeamsService();
