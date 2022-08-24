@@ -9,6 +9,5 @@ const matchesController = new MatchesController(matchesService);
 const matchesRoutes = Router();
 // matchesRoutes.get('/:id', (req, res) => matchesController.getById(req, res));
 matchesRoutes.get('/', (req, res) => matchesController.list(req, res));
-// matches?inProgress=false
 
 export default matchesRoutes;

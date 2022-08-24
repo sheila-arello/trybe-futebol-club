@@ -2,30 +2,39 @@ import Teams from '../database/models/teams';
 import Matches from '../database/models/matches';
 
 export interface IMatchesService {
-  list(): Promise<Matches[]>
+  list(inProgress?: boolean): Promise<Matches[]>
   getById(id: number): Promise<Matches | null>
 }
 
 export default class UserService implements IMatchesService {
   // eslint-disable-next-line class-methods-use-this
-  public async list(): Promise<Matches[]> {
-    const matches: Matches[] = await Matches
-      .findAll({
-        include: [
-          {
-            model: Teams,
-            foreignKey: 'homeTeam',
-            as: 'teamHome',
-            attributes: ['teamName'],
-          },
-          {
-            model: Teams,
-            foreignKey: 'awayTeam',
-            as: 'teamAway',
-            attributes: ['teamName'],
-          },
-        ],
-      });
+
+  private include = [
+    {
+      model: Teams,
+      foreignKey: 'homeTeam',
+      as: 'teamHome',
+      attributes: ['teamName'],
+    },
+    {
+      model: Teams,
+      foreignKey: 'awayTeam',
+      as: 'teamAway',
+      attributes: ['teamName'],
+    }];
+
+  public async list(inProgress?: boolean): Promise<Matches[]> {
+    let matches: Matches[] = [];
+    if (inProgress === undefined) {
+      matches = await Matches
+        .findAll({ include: this.include });
+    } else {
+      matches = await Matches
+        .findAll({
+          where: { inProgress },
+          include: this.include,
+        });
+    }
     return matches;
   }
 
