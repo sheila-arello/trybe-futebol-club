@@ -6,7 +6,7 @@ export interface IMatchesService {
   list(inProgress?: boolean): Promise<Matches[]>
   getById(id: number): Promise<Matches | null>
   create(data: IMatches): Promise<Matches | null>
-  edit(id: number): Promise<[number, Matches[]] | null>
+  edit(id: number): Promise<[number, Matches[]]>
 }
 
 export default class MatchesService implements IMatchesService {
@@ -56,7 +56,7 @@ export default class MatchesService implements IMatchesService {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public async edit(id: number): Promise<[number, Matches[]] | null> {
+  public async edit(id: number): Promise<[number, Matches[]]> {
     const match = await Matches.update({ inProgress: false }, { where: { id } });
     return match;
   }

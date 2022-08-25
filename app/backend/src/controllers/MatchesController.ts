@@ -50,7 +50,7 @@ export default class MatchesController {
     // ]);
     const { id } = req.params;
     const result = await this.matchesService.edit(Number(id));
-    if (!result) throw new NotFoundError('Not found');
+    if (result[0] === 0) throw new NotFoundError('Not found');
     // const post = await blogPostsService.getOnlyBlogPost(id);
     // // Recupera o ID do usuario a partir do token e compara com o userId do post
     // const { userId } = res;
