@@ -14,7 +14,7 @@ export interface IUserService {
 export default class UserService implements IUserService {
   // eslint-disable-next-line class-methods-use-this
   public async list(): Promise<User[]> {
-    const users: User[] = await User.findAll();
+    const users = await User.findAll();
     return users;
   }
 

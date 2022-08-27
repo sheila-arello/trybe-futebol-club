@@ -8,8 +8,13 @@ export default class LeaderboardController {
     // private teamsService: ITeamsService,
   ) { }
 
-  async totalPoints(req: Request, res: Response): Promise<void> {
-    const total = await this.leaderbordService.totalPoints();
+  async finalTableHT(_req: Request, res: Response): Promise<void> {
+    const total = await this.leaderbordService.finalTableHT();
+    res.status(200).json(total);
+  }
+
+  async finalTableAT(_req: Request, res: Response): Promise<void> {
+    const total = await this.leaderbordService.finalTableAT();
     res.status(200).json(total);
   }
 }

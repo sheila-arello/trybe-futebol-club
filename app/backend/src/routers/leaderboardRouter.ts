@@ -7,6 +7,7 @@ const leaderboardController = new LeaderboardController(leaderboardService);
 
 const leaderboardRoutes = Router();
 
-leaderboardRoutes.get('/home', (req, res) => leaderboardController.totalPoints(req, res));
+leaderboardRoutes.get('/home', (req, res) => leaderboardController.finalTableHT(req, res));
+leaderboardRoutes.get('/away', (req, res) => leaderboardController.finalTableAT(req, res));
 
 export default leaderboardRoutes;
