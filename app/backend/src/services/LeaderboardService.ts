@@ -50,7 +50,7 @@ SELECT
   SUM(IF(TR.resultado = 0, 1, 0)) as totalLosses,
   SUM(TR.away_team_goals) as goalsFavor,
   SUM(TR.home_team_goals) as goalsOwn,
-  SUM(TR.away_team_goals) - SUM(TR.away_team_goals) as goalsBalance,
+  SUM(TR.away_team_goals) - SUM(TR.home_team_goals) as goalsBalance,
   ROUND((SUM(TR.resultado)/(COUNT(TR.away_team)*3)*100), 2) as efficiency
 FROM (
       SELECT away_team, away_team_goals, home_team_goals,
