@@ -44,17 +44,9 @@ export default class MatchesController {
   }
 
   async edit(req: Request, res: Response): Promise<void> {
-    // const [{ id }, changes] = await Promise.all([
-    //   blogPostsService.validateParamsId(req.params),
-    //   blogPostsService.validateBodyEdit(req.body),
-    // ]);
     const { id } = req.params;
     const result = await this.matchesService.edit(Number(id));
     if (result[0] === 0) throw new NotFoundError('Not found');
-    // const post = await blogPostsService.getOnlyBlogPost(id);
-    // // Recupera o ID do usuario a partir do token e compara com o userId do post
-    // const { userId } = res;
-    // if (post.userId !== userId) throwUnauthorizedError('Unauthorized user');
     res.status(200).json({ message: 'Finished' });
   }
 }
