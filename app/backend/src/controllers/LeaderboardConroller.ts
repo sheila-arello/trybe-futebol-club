@@ -17,4 +17,9 @@ export default class LeaderboardController {
     const total = await this.leaderbordService.finalTableAT();
     res.status(200).json(total);
   }
+
+  async totalPointsLeaderboard(_req: Request, res: Response): Promise<void> {
+    const total = await this.leaderbordService.totalPointsLeaderboard();
+    res.status(200).json(total);
+  }
 }

@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
 // import { ITotalPoints } from '../interfaces/IBoard';
+import { IBoard } from '../interfaces/IBoard';
 import sequelize from '../database/models';
-// import Matches from '../database/models/matches';
 
 export interface ILeaderboardService {
-  finalTableHT(): Promise<any>
-  finalTableAT(): Promise<any>
-  // pointsHomeTeam(): Promise<any>
+  finalTableHT(): Promise<IBoard[]>
+  finalTableAT(): Promise<IBoard[]>
+  totalPointsLeaderboard(): Promise<IBoard[]>
 }
 
 const queryHomeTeam = `
@@ -74,54 +74,69 @@ ORDER BY totalPoints DESC,
 export default class LeaderboardService {
   // eslint-disable-next-line class-methods-use-this
 
-  // public async totalPointsLeaderboard(): Promise<void> {
-  //   const htPoints = await this.pointsHomeTeam();
-  //   const atPoints = await this.pointsAwayTeam();
-  //   const totalPoints = htPoints.map((team: any) => (
-  //     {
-  //       teamId: team.homeTeam,
-  //       points: Number(team.points) + Number(atPoints[team.homeTeam - 1].points),
-  //     }
-  //   ));
-
-  //   return totalPoints;
-  // }
-
-  public async calcTotals(queryTeam: string): Promise<any> {
+  public async calcTotals(queryTeam: string): Promise<IBoard[]> {
     const [totals] = await sequelize.query(queryTeam);
-    return totals as unknown;
+    return totals as IBoard[];
   }
 
-  public async finalTableHT(): Promise<any> {
+  public async finalTableHT(): Promise<IBoard[]> {
     const results = await this.calcTotals(queryHomeTeam);
     return results;
   }
 
-  public async finalTableAT(): Promise<any> {
+  public async finalTableAT(): Promise<IBoard[]> {
     const results = await this.calcTotals(queryAwayTeam);
     return results;
   }
 
-  // public async pointsHomeTeam(): Promise<any> {
-  //   const [pointsHT] = await sequelize.query(queryHomeTeam);
-  //   return pointsHT as unknown;
-  // }
+  public sumWithAwayTeam(team: IBoard, awayTeam: IBoard): IBoard {
+    const totalPoints = Number(team.totalPoints) + Number(awayTeam.totalPoints);
+    const totalGames = Number(team.totalGames) + Number(awayTeam.totalGames);
+    const goalsFavor = Number(team.goalsFavor) + Number(awayTeam.goalsFavor);
+    const goalsOwn = Number(team.goalsOwn) + Number(awayTeam.goalsOwn);
+    const efficiency = (((totalPoints) / (totalGames * 3)) * 100).toFixed(2);
+    return {
+      name: team.name,
+      totalPoints,
+      totalGames,
+      totalVictories: Number(team.totalVictories) + Number(awayTeam.totalVictories),
+      totalDraws: Number(team.totalDraws) + Number(awayTeam.totalDraws),
+      totalLosses: Number(team.totalLosses) + Number(awayTeam.totalLosses),
+      goalsFavor,
+      goalsOwn,
+      goalsBalance: goalsFavor - goalsOwn,
+      efficiency,
+    } as IBoard;
+  }
 
-  // public async pointsAwayTeam(): Promise<any> {
-  //   const [pointsAT] = await sequelize.query(queryAwayTeam);
-  //   return pointsAT as unknown;
-  // }
+  private sortLeaderboard(table: IBoard[]): IBoard[] {
+    table.sort((a, b) => {
+      if (a.totalPoints > b.totalPoints) return -1;
+      if (a.totalPoints < b.totalPoints) return 1;
+      if (a.totalVictories > b.totalVictories) return -1;
+      if (a.totalVictories < b.totalVictories) return 1;
+      if (a.goalsBalance > b.goalsBalance) return -1;
+      if (a.goalsBalance < b.goalsBalance) return 1;
 
-  // public async totalPoints(): Promise<void> {
-  //   const htPoints = await this.pointsHomeTeam();
-  //   const atPoints = await this.pointsAwayTeam();
-  //   const totalPoints = htPoints.map((team: any) => (
-  //     {
-  //       teamId: team.homeTeam,
-  //       points: Number(team.points) + Number(atPoints[team.homeTeam - 1].points),
-  //     }
-  //   ));
+      if (a.goalsFavor > b.goalsFavor) return -1;
+      if (a.goalsFavor < b.goalsFavor) return 1;
 
-  //   return totalPoints;
-  // }
+      if (a.goalsOwn > b.goalsOwn) return -1;
+      if (a.goalsOwn < b.goalsOwn) return 1;
+
+      return 0;
+    });
+    console.log(table);
+    return table;
+  }
+
+  public async totalPointsLeaderboard(): Promise<IBoard[]> {
+    const htTable = await this.finalTableHT();
+    const atTable = await this.finalTableAT();
+    const finalTable = htTable.map((team) => {
+      const awayTeam = atTable.find((aTeam) => aTeam.name === team.name) as IBoard;
+      return this.sumWithAwayTeam(team, awayTeam);
+    });
+    return this.sortLeaderboard(finalTable);
+  }
 }
