@@ -1,4 +1,4 @@
-import { ICreateMatch, IMatches } from '../interfaces/IMatches';
+import { ICreateMatch, IMatcheGoals, IMatches } from '../interfaces/IMatches';
 import Teams from '../database/models/teams';
 import Matches from '../database/models/matches';
 
@@ -7,6 +7,7 @@ export interface IMatchesService {
   getById(id: number): Promise<Matches | null>
   create(data: IMatches): Promise<Matches | null>
   edit(id: number): Promise<[number, Matches[]]>
+  editMatch(id: number, data: IMatcheGoals): Promise<[number, Matches[]]>
 }
 
 export default class MatchesService implements IMatchesService {
@@ -58,6 +59,12 @@ export default class MatchesService implements IMatchesService {
   // eslint-disable-next-line class-methods-use-this
   public async edit(id: number): Promise<[number, Matches[]]> {
     const match = await Matches.update({ inProgress: false }, { where: { id } });
+    return match;
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public async editMatch(id: number, data: IMatcheGoals): Promise<[number, Matches[]]> {
+    const match = await Matches.update(data, { where: { id } });
     return match;
   }
 }

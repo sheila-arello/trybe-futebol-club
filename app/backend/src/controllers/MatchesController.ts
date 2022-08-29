@@ -49,4 +49,11 @@ export default class MatchesController {
     if (result[0] === 0) throw new NotFoundError('Not found');
     res.status(200).json({ message: 'Finished' });
   }
+
+  async editMatch(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const result = await this.matchesService.editMatch(Number(id), req.body);
+    if (result[0] === 0) throw new NotFoundError('Not found');
+    res.status(200).json(result);
+  }
 }

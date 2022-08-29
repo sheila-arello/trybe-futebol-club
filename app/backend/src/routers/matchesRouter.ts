@@ -16,6 +16,11 @@ matchesRoutes.patch(
   verifyToken,
   (req, res) => matchesController.edit(req, res),
 );
+matchesRoutes.patch(
+  '/:id',
+  verifyToken,
+  (req, res) => matchesController.editMatch(req, res),
+);
 matchesRoutes.get('/', (req, res) => matchesController.list(req, res));
 matchesRoutes.post('/', verifyToken, (req, res) => matchesController.create(req, res));
 

@@ -2,11 +2,14 @@ export interface Indexable {
   id: number
 }
 
-export interface IMatches {
-  homeTeam: number;
-  awayTeam: number;
+export interface IMatcheGoals {
   homeTeamGoals: number;
   awayTeamGoals: number;
+}
+
+export interface IMatches extends IMatcheGoals {
+  homeTeam: number;
+  awayTeam: number;
 }
 
 export interface ICreateMatch extends IMatches {
