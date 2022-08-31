@@ -11,3 +11,10 @@ export interface IUser extends Indexable, UserCredentials {
   username: string;
   role: string;
 }
+
+export interface CreateUserResponse {
+  id: number;
+  email: string;
+  role:string;
+  token: string;
+}
