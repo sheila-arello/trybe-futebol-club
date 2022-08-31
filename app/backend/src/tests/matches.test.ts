@@ -6,6 +6,7 @@ import { app } from '../app';
 import { Response } from 'superagent';
 import Matches from '../database/models/matches';
 import { ICreateMatchResponse } from '../interfaces/IMatches';
+import verifyToken from '../middlewares/verifyToken';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -53,29 +54,32 @@ describe('Matches', () => {
     })
   });
 
-  // describe('Create', () => {
-  //   beforeEach(() => {
-  //     sinon.stub(Matches, 'create').resolves(matchesMock as Matches);
-  //   })
+  describe('Create', () => {
+    beforeEach(() => {
+      // sinon.stub(verifyToken).returns();
+      sinon.stub(Matches, 'create').resolves(matchesMock as Matches);
+    })
 
-  //   afterEach(() => {
-  //     sinon.restore();
-  //   })
+    afterEach(() => {
+      sinon.restore();
+    })
 
-  //   it('should return status 201', async  () => {
-  //     const response = await chai.request(app)
-  //       .post('/matches')
-  //       .send(matchCreateMock);
+    it('should return status 201', async  () => {
+      const response = await chai.request(app)
+        .post('/matches')
+        .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjEyNzkyNDZ9.9Z-xq0Ac--n5AmwmLm1uX55e36Mu_jgiMkm5KTXYGy4') // pegar o token valido
+        .send(matchCreateMock);
       
-  //     expect(response.status).to.equal(201);
-  //   })
+      expect(response.status).to.equal(201);
+    })
 
-  //   it('should return matches', async  () => {
-  //     const response = await chai.request(app)
-  //       .post('/matches')
-  //       .send(matchCreateMock);
+    it('should return matches', async  () => {
+      const response = await chai.request(app)
+        .post('/matches')
+        .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjEyNzkyNDZ9.9Z-xq0Ac--n5AmwmLm1uX55e36Mu_jgiMkm5KTXYGy4') // pegar o token valido
+        .send(matchCreateMock);
       
-  //     expect(response.body).to.be.deep.equal(matchesMock as Matches);
-  //   })
-  // });
+      expect(response.body).to.be.deep.equal(matchesMock);
+    })
+  });
 });
