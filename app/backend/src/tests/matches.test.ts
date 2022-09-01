@@ -82,4 +82,35 @@ describe('Matches', () => {
       expect(response.body).to.be.deep.equal(matchesMock);
     })
   });
+
+  // describe('Edit', () => {
+  //   beforeEach(() => {
+  //     // sinon.stub(verifyToken).returns();
+  //     sinon.stub(Matches, 'update').resolves(matchesMock as Matches);
+  //   })
+
+  //   afterEach(() => {
+  //     sinon.restore();
+  //   })
+
+  //   it('should return status 201', async  () => {
+  //     const response = await chai.request(app)
+  //       .patch('/matches/finish')
+  //       .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjEyNzkyNDZ9.9Z-xq0Ac--n5AmwmLm1uX55e36Mu_jgiMkm5KTXYGy4') // pegar o token valido
+  //       .send(matchCreateMock);
+      
+  //     expect(response.status).to.equal(201);
+  //   })
+
+  //   it('should return matches', async  () => {
+  //     const response = await chai.request(app)
+  //       .post('/matches')
+  //       .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdXNlci5jb20iLCJpZCI6Miwicm9sZSI6InVzZXIiLCJpYXQiOjE2NjEyNzkyNDZ9.9Z-xq0Ac--n5AmwmLm1uX55e36Mu_jgiMkm5KTXYGy4') // pegar o token valido
+  //       .send(matchCreateMock);
+      
+  //     expect(response.body).to.be.deep.equal(matchesMock);
+  //   })
+  // });
+
 });
+
