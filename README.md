@@ -57,7 +57,7 @@ Desenvolvido durante módulo de backend na Trybe | ago/2022.
 * LeaderBoard: Estruturar uma __query SQL__ para que, em uma única requisição, retornasse a classificação geral dos jogos.
 </details>
 
-## :man_technologist: Habilidades Desenvolvidas
+## :woman_technologist: Habilidades Desenvolvidas
 <details>
 <summary><strong>Hard Skills</strong></summary><br />
   
