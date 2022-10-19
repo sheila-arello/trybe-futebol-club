@@ -23,8 +23,11 @@ Desenvolvido durante módulo de backend na Trybe | ago/2022.
 
 <details>
   <summary markdown="span"><strong>A aplicação</strong></summary><br />
-    <!-- ![Exemplo app front](assets/front-example.png) -->
 
+  <div>
+    <img align="center" alt="TFC" src="https://github.com/sheila-arello/trybe-futebol-club/blob/main/front-example.png"/>
+  </div>
+  <br />
   O `TFC` é um site informativo sobre partidas e classificações de futebol! ⚽️
 </details>
 <details>
