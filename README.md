@@ -42,12 +42,14 @@ Desenvolvido durante módulo de backend na Trybe | ago/2022.
   Destaco aqui, uma das regras principais nesse desenvolvimento. Para adicionar uma partida ou fazer alterações, o usuário deve estar logado. __Essa verificação é feita através de um token válido.__
   
   Além disso, as tabelas `teams` e `matches` contam com um relacionamento para executar as devidas atualizações das partidas.
-
+  <div>
+    <img align="center" alt="TFC" src="https://github.com/sheila-arello/trybe-futebol-club/blob/main/er-diagram.png"/>
+  </div>
 </details>
 <details>
 <summary><strong>Observações</strong></summary><br />
   
-* Para esse projeto, foi diponibilizado pela Trybe toda a parte de frontend, sendo minha responsabilidade a criação do backend.
+* Para esse projeto, foi disponibilizado pela Trybe toda a parte de frontend, sendo minha responsabilidade a criação do backend.
 * O projeto foi desenvolvido com base em requisitos definidos pela Trybe dentro de um tempo pré determinado.
 </details>
 
@@ -64,7 +66,7 @@ Desenvolvido durante módulo de backend na Trybe | ago/2022.
 <details>
 <summary><strong>Hard Skills</strong></summary><br />
   
-* Principais hard skills desenvolvidas:
+Principais ferramentas/ conceitos trabalhados nesse projeto:
   * TypeScript
   * POO
   * SOLID
@@ -125,10 +127,10 @@ Desenvolvido durante módulo de backend na Trybe | ago/2022.
 
 ## 📈 Evolução do projeto
 <details>
-<summary><strong>Metodologias utilizadas</strong></summary><br />
+<summary><strong>ToDo's</strong></summary><br />
 
-* 
-* 
+* Tentar usar uma unica query para o resultado final da classificação. Atualmente usa 2 querys sendo uma para home_team e outra para away_team e utiliza logica em javascript para unir as 2 tabelas e reclassificar
+* Verificar a necessidade de refatoração
 * testes: atingir cobertura de 100%
 </details>
 
